@@ -1,0 +1,72 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+{% include 'header.html' %}
+
+        <style>
+            .sdk {
+                display: flex;
+                flex-direction:column;
+                justify-content:center;
+                margin-top: 30px;
+                margin-bottom: 30px;
+                background-position: center;
+                text-align: center;
+               
+                
+            }
+            form h2{
+                display: flex;
+                flex-direction:column !important;
+                justify-content:space-between;
+                width: 600px;
+            }
+            form h2 div{
+                display: flex;
+                flex-direction:row !important;
+                margin:20px;
+            }
+           h2 input{
+                font-size: 45px !important;
+                display:block;
+            }
+        #champTel{
+            width:115% !important ;
+        }
+        </style>
+        <div class='container ' >
+            <div class='row'>
+                <div class='col-6 mx-auto'>
+                    {% if messages %}
+                    {%for mes in messages%}
+                    <div class='alert alert-info'>{{mes}}</div>
+                     {% endfor %} 
+                     {% endif %} 
+                <div class="sdk">
+                    
+                        
+                    <h1>Montant pouvant être retiré : <span class="text-info">{{client.compte.solde_a_retirer}}</span></h1>
+                    <form method='post'>
+                        {% csrf_token %}
+                    <h2> <div><label> Entrer le montant : </label> <input name='montant' Type='number' class='form-control text-primary' id='montant'></div>
+                   <div id='champTel'>   <label> Entrer le numéro (MTN ou Orange) : </label> <input name='numero' Type='text' class='form-control text-primary' id='tel'></div>
+                    </h2>
+                    <input type='submit' class='btn btn-primary btn-lg ' value='retirer'>
+                    </form>
+                </div>
+
+            </div>
+            </div>
+           
+        </div>
+    </div>
+    <script lang='text/javascript'>
+       
+        var txttel=document.querySelector('#tel')
+        
+        window.intlTelInput(txttel, {
+            initialCountry: "cm", // Code du pays initial (Cameroun)
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+    </script>
+        {% endblock content %} 

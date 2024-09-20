@@ -1,0 +1,91 @@
+
+{% extends "basic.html" %} 
+{% load static %}
+{% block content %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .registration-form {
+            padding: 50px 0;
+        }
+        .registration-form form {
+            background-color: #fff;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .registration-form .form-icon img{
+            text-align: center;
+            background-color: #007bff;
+            border-radius: 50%;
+            font-size: 40px;
+            color: white;
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            margin-bottom: 20px;
+            line-height: 100px;
+        }
+        .registration-form .form-icon{
+            text-align: center;
+        }
+        .registration-form .form-group {
+            margin-bottom: 20px;
+        }
+        .registration-form .form-control {
+            border-radius: 20px;
+        }
+        .registration-form .btn {
+            border-radius: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+        .error{
+            font-size: 15px;
+        }
+        #inscrire::hover{
+            text-decoration:underlined;
+        }
+    </style>
+    <div class="registration-form">
+        <form method='POST'>
+            {% csrf_token %}
+            <h2 class='text-info text-center'>Connexion </h2>
+            <div class="form-icon mx-auto">
+                <span><i ><img src='{% static "images/OIP (3).jpg" %}' class="icon icon-user"></i></span>
+            </div>
+            {% if messages %}
+            {%for mes in messages%}
+            <div class='alert alert-danger'>{{mes}}</div>
+             {% endfor %} 
+             {% endif %}  
+           
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email" id='email' name='email' >
+                <div class='text-danger error' id='errornom'></div>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Mot de passe" name='password'>
+                <div class='text-danger error' id='errornom'></div>
+            </div>
+           
+            <div class="form-group" style=''>
+                <button type="submit" class="btn btn-block btn-lg fs-20 ">Se connecter</button>
+                <a class='text-center' id="inscrire" href='{% url "client:register" %}' style="text-decoration:none">Vous n'avez pas de compte, inscrivez-vous</a>
+                
+            </div>
+        </form>
+    </div>
+    <script lang='text/javascript'>
+        window.intlTelInput(txttel, {
+            initialCountry: "cm", // Code du pays initial (Cameroun)
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+    </script>
+    
+    {% endblock content %}
+
+   

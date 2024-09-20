@@ -1,0 +1,93 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+{% include 'header.html' %}
+
+{% if error%}
+<div class='alert alert-danger'>{{error}}</div>
+{%elif success%}
+<div class='alert alert-success'>{{success}}</div>
+{%endif%}
+<div class='container'>
+  <div class="card border-dark mb-3" >
+    <div class="card-header">Soldes</div>
+    <div class="card-body text-secondary">
+      <ul>
+        <li><span>Total du montant déposé: {{client.compte.solde_deposer}}</span></li>
+        <li><span>Montant pouvant être retiré: {{client.compte.solde_a_retirer}}</span></li>
+        
+      </ul>
+    </div>
+   </div>
+  </div>
+</div>
+<!--Section: Content-->
+<section class="text-center">
+  <h4 class="mb-5"><strong>Machines achetées</strong></h4>
+
+  <div class="row">
+    {%if achats %}
+    {%for ach in achats%}
+    {% if ach.encours %}
+    <input value='{{ach.id}}' type='hidden' id='id_ach'>
+    <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
+      <div class="card">
+        <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+          <img
+            src="http://127.0.0.1:8000/media/{{ach.machine.image}}"
+            class="img-fluid"
+          />
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ach.machine.nom}}({{ach.machine.montant}}FCFA)</h5>
+          <p class="card-text{{ach.id}}">
+            
+          </p>
+          <a type="button" class="btn btn-primary" href="{% url 'client:minage' ach.id %}" style='display:none;' id='btn{{ach.id}}' >Miner</a>
+        </div>
+      </div>
+    </div>
+     {% endif %}
+      {%endfor%}
+      {% else %}
+      <div class='alert alert-warning'>Aucune machine active pour le moment</div>
+  {%endif%}
+    </div>
+  </section>
+  <script lang='text/javascript'>
+    var id_ach=document.querySelectorAll('#id_ach')
+    id_ach.forEach(ida =>{
+      var id=ida.value;
+      fetch(`/prochain_minage/${id}`)
+      .then(res=>res.json())
+      .then((data)=>{
+        var prochain=new Date(data.date)
+        function updateCountdown() {
+          const now = new Date();
+          const timeRemaining = prochain - now;
+      
+          if (timeRemaining <= 0) {
+              clearInterval(countdownInterval);
+              // Actions à effectuer une fois la date atteinte
+              document.querySelector('#btn'+ id.toString()).style.display='block';
+          } else {
+              const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+              const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      
+              // Afficher le temps restant
+              document.querySelector('.card-text'+ id.toString()).textContent=`Temps restant: ${hours}h ${minutes}m ${seconds}s`;
+          }
+      }
+      
+      // Mettre à jour le compte à rebours toutes les secondes
+      const countdownInterval = setInterval(updateCountdown, 1000);
+
+      }).catch(error=>console.log(error))
+    })
+  </script>
+
+{% endblock content %}

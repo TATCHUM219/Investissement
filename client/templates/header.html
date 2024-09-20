@@ -1,0 +1,218 @@
+ {% load static %}
+<header>
+    <style>
+      /* Carousel styling */
+      #introCarousel,
+      .carousel-inner,
+      .carousel-item,
+      .carousel-item.active {
+        height: 100vh;
+      }
+
+      .carousel-item:nth-child(1) {
+        background-image: url('{% static "images/OIP.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+      .carousel-item:nth-child(2) {
+        background-image: url('{% static "images/OIP (1).jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+      .carousel-item:nth-child(3) {
+        background-image: url('{% static "images/OIP (2).jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+      .navbar {
+        z-index: 2 !important;
+        background: transparent !important;      
+      }
+      .nav-link{
+        color: #fff !important;
+      }
+      .navbar-brand{font-weight: bolder;color:white;}
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #introCarousel {
+          margin-top: -58.59px;
+        }
+       
+        #introCarousel,
+        .carousel-inner,
+        .carousel-item,
+        .carousel-item.active {
+          height: 50vh;
+        }
+      }
+      @media (max-width: 992px) {
+        .nav-link{
+          color: #000 !important;
+        }
+        .navbar-brand{font-weight: bolder;color:black;}
+      }
+
+     
+      .modal-body{
+        display:flex;
+        flex-direction:columns;
+        align-items:center;
+        justify-content: space-around;
+      }
+      .modal-body span{font-weight:bold;}
+      .modal-body img{width:200px;height:200px;}
+      ul{list-style:none;}
+     .modal-body li{text-align:left;font-size:25px;}
+      .card img{height:200px !important;}
+      .card-header{
+        font-size: 25px;
+        font-weight: bolder;
+        text-align:center;
+      }
+      .card li{
+        text-align:center;font-size:22px;
+      }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Plus Invest</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/produits/">Machines</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/depot/">Dépôt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Retrait</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'client:compte' client.id %}">Mon compte</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'client:logout' %}">Déconnexion</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <ul class="navbar-nav d-flex flex-row">
+              <!-- Icons -->
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" rel="nofollow"
+                  >
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://www.facebook.com/mdbootstrap" rel="nofollow" >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="https://twitter.com/MDBootstrap" rel="nofollow" >
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              
+            </ul>
+          </form>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Navbar -->
+
+    <!-- Carousel wrapper -->
+    <div id="introCarousel" class="carousel slide carousel-fade shadow-2-strong" data-mdb-carousel-init>
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <li data-mdb-target="#introCarousel" data-mdb-slide-to="0" class="active"></li>
+        <li data-mdb-target="#introCarousel" data-mdb-slide-to="1"></li>
+        <li data-mdb-target="#introCarousel" data-mdb-slide-to="2"></li>
+      </div>
+
+      <!-- Inner -->
+      <div class="carousel-inner">
+        <!-- Single item -->
+        <div class="carousel-item active">
+          <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="text-white text-center" data-mdb-theme="dark">
+                <h1 class="mb-3" style='font-size:70px; font-family: fixedsys'>PLUS INVEST</h1>
+                <h5 class="mb-4">Bienvenue M.{{client.nom}}</h5>
+                <a
+                  class="btn btn-outline-light btn-lg m-2" data-mdb-ripple-init
+                  href="{% url 'client:login' %}"
+                  role="button"
+                  rel="nofollow"
+                  
+                  >effectuer un Retrait</a
+                >
+                <a
+                  class="btn btn-outline-light btn-lg m-2" data-mdb-ripple-init
+                  href="{% url 'client:compte' client.id %}"
+                  
+                  role="button"
+                  >Voir vos machines</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+          <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="text-white text-center">
+                <h2>Investissez et faites nous confiance</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+          <div
+            class="mask"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgba(29, 236, 197, 0.7),
+                rgba(91, 14, 214, 0.7) 100%
+              );
+            "
+          >
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="text-white text-center" data-mdb-theme="dark">
+                <h2>Gagnez de l'argent juste en nous faisant confiance</h2>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Inner -->
+
+      <!-- Controls -->
+      <a class="carousel-control-prev" href="#introCarousel" role="button" data-mdb-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#introCarousel" role="button" data-mdb-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <!-- Carousel wrapper -->
+  </header>

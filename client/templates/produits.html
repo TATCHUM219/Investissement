@@ -1,0 +1,84 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+{% include 'header.html' %}
+    
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="mt-5">
+      <div class="container">
+        
+
+        <hr class="my-5" />
+
+        <!--Section: Content-->
+        <section class="text-center">
+          <h4 class="mb-5"><strong>Les machines disponibles</strong></h4>
+
+          <div class="row">
+            {%for mach in machines%}
+            <div class="col-lg-4 col-md-12 mb-4">
+              <div class="card">
+                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                  <img
+                    src="http://127.0.0.1:8000/media/{{mach.image}}"
+                    class="img-fluid"
+                  />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{mach.nom}}({{mach.montant}} FCFA)</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the
+                    card's content.
+                  </p>
+                  <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal{{mach.id}}">Plus de détails</a>
+                </div>
+              </div>
+            </div>
+
+            <!--Modal-->
+            <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade modal-lg" id="Modal{{mach.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Informations sur {{mach.nom}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src='http://127.0.0.1:8000/media/{{mach.image}}' alt='image'>
+        <ul>
+          <li><span>Nom: </span>{{mach.nom}}</li>
+          <li><span>Montant: </span>{{mach.montant}} FCFA</li>
+          <li><span>Période de minage: </span>{{mach.periode_minage}} jours</li>
+          <li><span>Montant à miner par jour: </span>{{mach.montant_a_miner}} FCFA</li>
+          <li><span>Catégorie: </span>{{mach.categorie}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
+        <a type="button" class="btn btn-primary" href="/achat/{{client.id}}/{{mach.id}}">Acheter</a>
+      </div>
+    </div>
+  </div>
+</div>
+            {% endfor %}
+          </div>
+        </section>
+        <!--Section: Content-->
+
+        <hr class="my-5" />
+
+      
+      </div>
+    </main>
+    <!--Main layout-->
+
+    {% endblock content %}
